@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Awards Form</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Radio+Canada&display=swap" rel="stylesheet"> 
+    <style>
+        /* .fieldsetToCenter
+        {
+            text-align: center;
+        } */
+        form
+        {
+            margin: auto;
+        }
+        fieldset
+        {
+            /* align-self: center; */
+            text-align: left;
+            margin: 2em 0;
+            padding: 1em 2em;
+            border-radius: 6px;
+            /* background-color: #002753; */
+            background-color: #002b5c;
+            max-width: fit-content;
+        }
+        legend
+        {
+            color: white;
+            font-family: 'Radio Canada', sans-serif;
+            font-size: x-large;
+        }
+        body
+        {
+            /* background-color: #002b5c; */
+            background-color: 	#002753;
+            align-items: center;
+        }
+        label
+        {
+            display: block;
+            margin-top: .75em;
+            margin-bottom: .2em;
+            color: #a38a53;
+            font-family: 'Radio Canada', sans-serif;
+            font-size: large;
+        }      
+        label:first-of-type
+        {
+            margin-top: 0;
+        }
+        select
+        {
+            background-color: #25292e;
+            color: white;
+           font-family: 'Radio Canada', sans-serif;
+           border: 1.5px solid white;
+           border-radius: 2px;
+        }
+        input
+        {
+            padding: .35em;
+            font-family: 'Radio Canada', sans-serif;
+            font-size: small;
+            border: 1.5px solid white;
+            background-color: #25292e;
+            color: white;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        input:hoover
+        {
+            border: 1.5px solid #dddddd;
+            background-color: #35393e;
+        }
+    </style>
+</head>
+<body>
+<!-- 
+<form action="save.php" name="myform" method="post">
+
+<textarea class="textBox" name="mytext"></textarea>
+<input type="submit" class="save" value="save"/>
+ -->
+ <div class="fieldsetToCenter">
+<fieldset>
+    <legend>Awards Form</legend>
+    
+<form action="save.php" method="post" name="myform" accept-charset=utf-8>
+    <!---Current problem is that the dropdown menus aren't being understood by the script
+    going to try changing the php-->
+    <label><b>Class:</b></label>
+    <select id="selectClass" name="selectClass" required>
+        <option disabled selected>Select</option>
+    </select>
+    <label><b>Student Name:</b></label>
+    <select id="selectStudent" name="selectStudent" required>
+        <option disabled selected>Select</option>
+    </select>
+    <label><b>Teacher Name:</b></label>
+    <select id="teacherName" name="teacherName" required>
+        <option disabled selected>Select</option>
+    </select>
+    <label><b>Trimester:</b></label>
+    <select id="trimester" name="trimester" required>
+        <option disabled selected>Select</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+    </select>
+    <!-- the post method won't work unless this text area exists, so it's hidden bc it's useless -->
+    <textarea class="textBox" name="mytext" hidden></textarea>
+    <br><br>
+    <input type="submit" class="save" value="Submit"/>
+  </form>
+
+</fieldset>
+</div>
+
+<script>
+    console.log("script accessed");
+            //read in the list of students- included for convience, just need the array
+                let allText;
+                let studentList;
+                var rawFile = new XMLHttpRequest();
+                rawFile.open("GET", "studentList.txt", true);
+                rawFile.onreadystatechange = function() {
+                if (rawFile.readyState === 4) {
+                    if(rawFile.status === 200 || rawFile.status == 0)
+                    {
+                    allText = rawFile.responseText;
+                    studentList = allText.split(/\r?\n/);
+                    //append Students to the dd menu
+                        var dropdown = document.getElementById("selectStudent");
+
+                        for (var i = 0; i < studentList.length; ++i) 
+                        {
+                            var nextOption = new Option(studentList[i], studentList[i]);
+                            nextOption.setAttribute("id", studentList[i]);
+                            nextOption.setAttribute("class", "ddContent");
+                                //remove after testing
+                                //console.log(nextOption.getAttribute("id"));
+                            dropdown[dropdown.length] = nextOption;
+                        }
+                    }
+                }
+                }
+                rawFile.send();
+              
+                
+
+///////////
+
+                let allText1;
+                let classList;
+                var rawFile1 = new XMLHttpRequest();
+                rawFile1.open("GET", "classList.txt", true);
+                rawFile1.onreadystatechange = function() {
+                if (rawFile1.readyState === 4) {
+                    if(rawFile1.status === 200 || rawFile1.status == 0)
+                    {
+                    allText1 = rawFile1.responseText;
+                    classList = allText1.split(/\r?\n/);
+                    //append classes to the dd menu
+                        var dropdown1 = document.getElementById("selectClass");
+
+                        for (var i = 0; i < classList.length; ++i) 
+                        {
+                            var nextOption1 = new Option(classList[i], classList[i]);
+                            nextOption1.setAttribute("id", classList[i]);
+                            nextOption1.setAttribute("class", "ddContent");
+                                //remove after testing
+                                //console.log(nextOption.getAttribute("id"));
+                            dropdown1[dropdown1.length] = nextOption1;
+                        }
+                    }
+                }
+                }
+                rawFile1.send();
+
+
+//////////
+
+
+let allText2;
+                let teacherList;
+                var rawFile2 = new XMLHttpRequest();
+                rawFile2.open("GET", "teacherList.txt", true);
+                rawFile2.onreadystatechange = function() {
+                    //account for different browsers
+                if (rawFile2.readyState === 4) {
+                    if(rawFile2.status === 200 || rawFile2.status == 0)
+                    {
+                    allText2 = rawFile2.responseText;
+                    teacherList = allText2.split(/\r?\n/);
+                    //append classes to the dd menu
+                        var dropdown2 = document.getElementById("teacherName");
+
+                        for (var i = 0; i < teacherList.length; ++i) 
+                        {
+                            var nextOption2 = new Option(teacherList[i], teacherList[i]);
+                            //put the attribute just in case
+                            nextOption2.setAttribute("id", teacherList[i]);
+                            nextOption2.setAttribute("class", "ddContent");
+                                //remove after testing
+                                //console.log(nextOption.getAttribute("id"));
+                            dropdown2[dropdown2.length] = nextOption2;
+                        }
+                    }
+                }
+                }
+                rawFile2.send();
+
+</script>
+</body>
+</html>
+
